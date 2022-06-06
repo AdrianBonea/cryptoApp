@@ -1,4 +1,4 @@
-export default function Chart() {
+const Chart = () => {
   return (
     <section className="relative">
       <h3 className="text-lg leading-6 font-medium text-gray-900 my-8">
@@ -34,4 +34,6 @@ export default function Chart() {
       </button>
     </section>
   );
-}
+};
+
+export default Chart;

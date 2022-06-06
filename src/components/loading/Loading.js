@@ -1,5 +1,14 @@
-export default function Loading() {
-  const loading = false;
+import { useState, useEffect } from "react";
+
+const Loading = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 2 seconds delay to show loading
+  }, []);
+
   return (
     <div>
       {loading && (
@@ -16,7 +25,7 @@ export default function Loading() {
               cy="12"
               r="10"
               stroke="currentColor"
-              stroke-width="4"
+              strokeWidth="4"
             ></circle>
             <path
               className="opacity-75"
@@ -28,4 +37,6 @@ export default function Loading() {
       )}
     </div>
   );
-}
+};
+
+export default Loading;
