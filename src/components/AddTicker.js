@@ -1,12 +1,11 @@
 export default function AddTicker(props) {
-  const { ticker } = props;
-  console.log();
+  console.log(props);
   return (
     <section>
       <div className="flex">
         <div className="max-w-xs">
           <label
-            for="wallet"
+            htmlFor="wallet"
             className="block text-sm font-medium text-gray-700"
           >
             Ticker
@@ -21,11 +20,9 @@ export default function AddTicker(props) {
             />
           </div>
           <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
-            {ticker.map((ticker) => (
-              <span className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
-                {ticker}
-              </span>
-            ))}
+            <span className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer">
+              {props[1].ticker}
+            </span>
           </div>
           <div className="text-sm text-red-600">
             Such a Ticker has already been added
