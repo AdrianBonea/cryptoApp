@@ -1,21 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef } from 'react';
 
-const AddTicker = () => {
-  const [ticker, setTicker] = useState(["BTC", "ETH", "XRP", "BCH"]); // default ticker
-  const [errorMsj, setErrorMsj] = useState(false);
+function AddTicker() {
+  const [ticker, setTicker] = useState(['BTC', 'ETH', 'XRP', 'BCH']); // default ticker
+  const [errorStatus, setErrorStatus] = useState(false);
 
   const tickerInput = useRef();
 
   const handleSubmit = (e) => {
-    if (
-      !ticker.includes(tickerInput.current.value) &&
-      tickerInput.current.value !== ""
-    ) {
+    if (!ticker.includes(tickerInput.current.value) && tickerInput.current.value !== '') {
       // check if ticker is already in the list or is null
       setTicker([...ticker, tickerInput.current.value]);
-      setErrorMsj(false); // if the ticker it is not in the list or not empty, then the error message is not shown
+      setErrorStatus(false); // if the ticker it is not in the list or not empty, then the error message is not shown
     } else {
-      setErrorMsj(true); // if the ticker it is in the list or empty, then the error message is shown
+      setErrorStatus(true); // if the ticker it is in the list or empty, then the error message is shown
     }
     e.preventDefault(); // prevent the default behavior of the form
   };
@@ -25,12 +22,9 @@ const AddTicker = () => {
       <form>
         <div className="flex">
           <div className="max-w-xs">
-            <label
-              htmlFor="wallet"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <h2 htmlFor="wallet" className="block text-sm font-medium text-gray-700">
               Ticker
-            </label>
+            </h2>
             <div className="mt-1 relative rounded-md shadow-md">
               <input
                 ref={tickerInput}
@@ -42,17 +36,17 @@ const AddTicker = () => {
               />
             </div>
             <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
-              {ticker.map((ticker, index) => (
+              {ticker.map((item) => (
                 <span
-                  key={index}
+                  key={item}
                   className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
                 >
-                  {ticker}
+                  {item}
                 </span>
               ))}
             </div>
             <div className="text-sm text-red-600">
-              {errorMsj && "Such a Ticker has already been added"}
+              {errorStatus && 'Such a Ticker has already been added'}
             </div>
           </div>
         </div>
@@ -69,13 +63,13 @@ const AddTicker = () => {
             viewBox="0 0 24 24"
             fill="#ffffff"
           >
-            <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+            <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
           </svg>
           Add
         </button>
       </form>
     </section>
   );
-};
+}
 
 export default AddTicker;

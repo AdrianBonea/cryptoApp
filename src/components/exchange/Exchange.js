@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import DeleteBtn from "./DeleteBtn";
-import { data } from "../../constant";
+import Button from './DeleteBtn';
+import { data } from '../../constant';
 
-const Exchange = () => {
+function Exchange() {
   const [cryptoData, setCryptoData] = useState(data);
   const [selectedCrypto, setSelectedCrypto] = useState();
 
@@ -12,36 +12,43 @@ const Exchange = () => {
   };
 
   const handleDelete = () => {
-    setCryptoData(cryptoData.filter((crypto) => crypto.id !== selectedCrypto)); // delete the selected crypto after it is selected
+    const filteredData = cryptoData.filter((crypto) => crypto.id !== selectedCrypto);
+    setCryptoData(filteredData); // delete the selected crypto after it is selected
   };
 
   return (
     <section>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {cryptoData.map((crypto) => (
+        {cryptoData.map((item) => (
           <div
-            key={crypto.id + crypto.name}
-            id={crypto.id}
+            role="textbox"
+            tabIndex={0}
+            key={item.id + item.name}
+            id={item.id}
             className={`bg-white overflow-hidden shadow rounded-lg  ${
-              selectedCrypto === crypto.id ? "border-4 border-purple-800" : ""
+              selectedCrypto === item.id ? 'border-4 border-purple-800' : ''
             } cursor-pointer`}
             onClick={handleSelect}
           >
             <div className="px-4 py-5 sm:p-6 text-center">
               <dt className="text-sm font-medium text-gray-500 truncate">
-                {crypto.firstCurrency + "-" + crypto.secondCurrency}
+                {`${item.firstCurrency}-USD`}
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {crypto.change}
-              </dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.change}</dd>
             </div>
-            <div className="w-full border-t border-gray-200"></div>
-            <DeleteBtn handleDelete={handleDelete} />
+            <div className="w-full border-t border-gray-200" />
+            <Button type="delete" onClick={handleDelete}>
+              Delete
+            </Button>
           </div>
         ))}
       </dl>
     </section>
   );
-};
+}
 
 export default Exchange;
+
+Exchange.defaultProps = {
+  type: 'delete',
+};

@@ -1,15 +1,15 @@
-import Main from "./containers/Main";
+import { Home } from './pages';
 
-const App = () => {
+function App() {
   // const coinElements = coinData.map((coin) => (
   //   <AddTicker key={coin.id} {...coin} />
   // ));
 
   return (
     <section>
-      <Main />
+      <Home />
     </section>
   );
-};
+}
 
 export default App;

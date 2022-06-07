@@ -2,25 +2,21 @@
   {
     "id": "01",
     "firstCurrency": "WTF",
-    "secondCurrency": "USD",
     "change": 0.94
   },
   {
     "id": "02",
     "firstCurrency": "VUE",
-    "secondCurrency": "RUB",
     "change": 80000.0
   },
   {
     "id": "03",
     "firstCurrency": "BTC",
-    "secondCurrency": "USD",
     "change": 31235.9
   },
   {
     "id": "04",
     "firstCurrency": "DOGE",
-    "secondCurrency": "USD",
     "change": 0.082
   }
 ]

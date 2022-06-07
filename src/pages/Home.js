@@ -1,6 +1,6 @@
-import { Chart, Exchange, Loading, AddTicker } from "../components";
+import { Chart, Exchange, Loading, AddTicker } from '../components';
 
-const Main = () => {
+function Main() {
   // const coinElements = coinData.map((coin) => (
   //   <AddTicker key={coin.id} {...coin} />
   // ));
@@ -19,6 +19,6 @@ const Main = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Main;
