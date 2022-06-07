@@ -5,11 +5,7 @@ function App() {
   //   <AddTicker key={coin.id} {...coin} />
   // ));
 
-  return (
-    <section>
-      <Home />
-    </section>
-  );
+  return <Home />;
 }
 
 export default App;
