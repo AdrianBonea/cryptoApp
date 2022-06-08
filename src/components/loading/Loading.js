@@ -6,7 +6,7 @@ function Loading() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000); // 2 seconds delay to show loading
+    }, 200); // 0.2 seconds delay to show loading
   }, []);
 
   return (

@@ -1,22 +1,22 @@
 [
   {
-    "id": "01",
-    "firstCurrency": "WTF",
-    "change": 0.94
+    "id": "0",
+    "name": "WTF",
+    "change": [0.94]
   },
   {
-    "id": "02",
-    "firstCurrency": "VUE",
-    "change": 80000.0
+    "id": "1",
+    "name": "VUE",
+    "change": [80000.0]
   },
   {
-    "id": "03",
-    "firstCurrency": "BTC",
-    "change": 31235.9
+    "id": "2",
+    "name": "BTC",
+    "change": [31235.9]
   },
   {
-    "id": "04",
-    "firstCurrency": "DOGE",
-    "change": 0.082
+    "id": "3",
+    "name": "DOGE",
+    "change": [0.082]
   }
 ]

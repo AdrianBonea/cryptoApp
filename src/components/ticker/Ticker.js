@@ -1,20 +1,26 @@
-import { useState, useRef } from 'react';
+import { useState, useId } from 'react';
+import PropTypes from 'prop-types';
 
-function AddTicker() {
-  const [ticker, setTicker] = useState(['BTC', 'ETH', 'XRP', 'BCH']); // default ticker
-  const [errorStatus, setErrorStatus] = useState(false);
+import Input from '../input/Input';
 
-  const tickerInput = useRef();
+const mokedTicker = ['BTC', 'ETH', 'XRP', 'BCH']; // default ticker
 
-  const handleSubmit = (e) => {
-    if (!ticker.includes(tickerInput.current.value) && tickerInput.current.value !== '') {
-      // check if ticker is already in the list or is null
-      setTicker([...ticker, tickerInput.current.value]);
-      setErrorStatus(false); // if the ticker it is not in the list or not empty, then the error message is not shown
-    } else {
-      setErrorStatus(true); // if the ticker it is in the list or empty, then the error message is shown
-    }
-    e.preventDefault(); // prevent the default behavior of the form
+function Ticker({ onAddTicker }) {
+  const [ticker, setTicker] = useState('');
+  const [autoCompleteItems] = useState(mokedTicker);
+  const [errorStatus] = useState(false); // for the moment I don't need this
+
+  const id = useId();
+
+  const handleTickerChange = (e) => {
+    setTicker(e); // set the ticker value
+  };
+
+  const handleAddTicker = () => {
+    if (ticker.length === 0) return; // if the ticker is empty, then do nothing
+
+    onAddTicker(ticker); // add the ticker to the list
+    setTicker(''); // clear the ticker input
   };
 
   return (
@@ -22,21 +28,14 @@ function AddTicker() {
       <form>
         <div className="flex">
           <div className="max-w-xs">
-            <h2 htmlFor="wallet" className="block text-sm font-medium text-gray-700">
+            <h2 htmlFor={id} className="block text-sm font-medium text-gray-700">
               Ticker
             </h2>
             <div className="mt-1 relative rounded-md shadow-md">
-              <input
-                ref={tickerInput}
-                type="text"
-                name="wallet"
-                id="wallet"
-                className="block w-full pr-10 border-gray-300 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md"
-                placeholder="For example DOGE"
-              />
+              <Input name="ticker" value={ticker} onChange={handleTickerChange} />
             </div>
             <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
-              {ticker.map((item) => (
+              {autoCompleteItems.map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
@@ -51,7 +50,7 @@ function AddTicker() {
           </div>
         </div>
         <button
-          onClick={handleSubmit}
+          onClick={handleAddTicker}
           type="button"
           className="my-4 inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
         >
@@ -72,4 +71,12 @@ function AddTicker() {
   );
 }
 
-export default AddTicker;
+Ticker.propTypes = {
+  onAddTicker: PropTypes.func,
+};
+
+Ticker.defaultProps = {
+  onAddTicker: () => {},
+};
+
+export default Ticker;

@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Button from './DeleteBtn';
-import { data } from '../../constant';
 
-function Exchange() {
-  const [cryptoData, setCryptoData] = useState(data);
+function Exchange({ tickerData, updateTickerData }) {
   const [selectedCrypto, setSelectedCrypto] = useState();
 
   const handleSelect = (e) => {
@@ -12,18 +11,18 @@ function Exchange() {
   };
 
   const handleDelete = () => {
-    const filteredData = cryptoData.filter((crypto) => crypto.id !== selectedCrypto);
-    setCryptoData(filteredData); // delete the selected crypto after it is selected
+    const filteredData = tickerData.filter((item) => item.id !== selectedCrypto); // filter the data to remove the selected crypto
+    updateTickerData(filteredData);
   };
 
   return (
     <section>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {cryptoData.map((item) => (
+        {tickerData.map((item) => (
           <div
             role="textbox"
             tabIndex={0}
-            key={item.id + item.name}
+            key={item.name}
             id={item.id}
             className={`bg-white overflow-hidden shadow rounded-lg  ${
               selectedCrypto === item.id ? 'border-4 border-purple-800' : ''
@@ -31,9 +30,7 @@ function Exchange() {
             onClick={handleSelect}
           >
             <div className="px-4 py-5 sm:p-6 text-center">
-              <dt className="text-sm font-medium text-gray-500 truncate">
-                {`${item.firstCurrency}-USD`}
-              </dt>
+              <dt className="text-sm font-medium text-gray-500 truncate">{`${item.name}-USD`}</dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.change}</dd>
             </div>
             <div className="w-full border-t border-gray-200" />
@@ -47,8 +44,26 @@ function Exchange() {
   );
 }
 
-export default Exchange;
+Exchange.propTypes = {
+  tickerData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      change: PropTypes.arrayOf(PropTypes.number),
+    })
+  ),
+  updateTickerData: PropTypes.func,
+};
 
 Exchange.defaultProps = {
-  type: 'delete',
+  tickerData: [
+    {
+      id: '1',
+      name: 'Bitcoin',
+      change: [0.0],
+    },
+  ],
+  updateTickerData: () => {},
 };
+
+export default Exchange;
