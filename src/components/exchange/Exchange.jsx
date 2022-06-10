@@ -31,7 +31,7 @@ function Exchange({ tickerData, updateTickerData }) {
           >
             <div className="px-4 py-5 sm:p-6 text-center">
               <dt className="text-sm font-medium text-gray-500 truncate">{`${item.name}-USD`}</dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.change}</dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.price}</dd>
             </div>
             <div className="w-full border-t border-gray-200" />
             <Button type="delete" onClick={handleDelete}>
@@ -49,7 +49,7 @@ Exchange.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
-      change: PropTypes.arrayOf(PropTypes.number),
+      change: PropTypes.number,
     })
   ),
   updateTickerData: PropTypes.func,

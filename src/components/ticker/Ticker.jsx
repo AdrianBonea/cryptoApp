@@ -1,16 +1,35 @@
-import { useState, useId } from 'react';
+import { useState, useId, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from '../input/Input';
-
-const mokedTicker = ['BTC', 'ETH', 'XRP', 'BCH']; // default ticker
+import { getAllCoinsList } from '../../services/api/tickers';
 
 function Ticker({ onAddTicker }) {
   const [ticker, setTicker] = useState('');
-  const [autoCompleteItems] = useState(mokedTicker);
+  const [allCoinsList, setAllCoinsList] = useState([]);
+  const [autoCompleteItems, setAutoCompleteItems] = useState([]);
+
   const [errorStatus] = useState(false); // for the moment I don't need this
 
-  const id = useId();
+  useEffect(() => {
+    getAllCoinsList().then((coins) => {
+      setAllCoinsList(coins);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (ticker.length > 0) {
+      const filteredCoins = allCoinsList
+        .filter((coin) => coin.toLowerCase().startsWith(ticker.toLowerCase()))
+        .slice(0, 4);
+
+      setAutoCompleteItems(filteredCoins);
+    } else {
+      setAutoCompleteItems([]);
+    }
+  }, [ticker, allCoinsList]);
+
+  const id = useId(); // generate a unique id for the input
 
   const handleTickerChange = (e) => {
     setTicker(e); // set the ticker value
