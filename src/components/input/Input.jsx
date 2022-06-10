@@ -3,22 +3,25 @@ import PropTypes from 'prop-types';
 import { useId } from 'react';
 
 function Input({ value, onChange, name, type, placeholder }) {
-  const id = useId();
-
   const handleChange = (e) => {
     const { value: changedValue } = e.target;
     onChange(changedValue, e);
   };
 
+  const id = useId();
+
   return (
-    <input
-      value={value}
-      onChange={handleChange}
-      type={type}
-      name={name}
-      id={id}
-      placeholder={placeholder}
-    />
+    <div className="mt-1 relative rounded-md shadow-md">
+      <input
+        id={id}
+        name={name}
+        type={type}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        className="block w-full pr-10 border-gray-300 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm rounded-md"
+      />
+    </div>
   );
 }
 

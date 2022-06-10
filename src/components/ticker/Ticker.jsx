@@ -31,9 +31,9 @@ function Ticker({ onAddTicker }) {
             <h2 htmlFor={id} className="block text-sm font-medium text-gray-700">
               Ticker
             </h2>
-            <div className="mt-1 relative rounded-md shadow-md">
-              <Input name="ticker" value={ticker} onChange={handleTickerChange} />
-            </div>
+
+            <Input name="ticker" value={ticker} onChange={handleTickerChange} />
+
             <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
               {autoCompleteItems.map((item) => (
                 <span
