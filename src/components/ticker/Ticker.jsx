@@ -1,15 +1,15 @@
-import { useState, useId, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from '../input/Input';
-import { getAllCoinsList } from '../../services/api/tickers';
+import { getAllCoinsList, getPrices } from '../../services/api/tickers';
 
-function Ticker({ onAddTicker }) {
+function Ticker({ onAddTicker, setPrices, url }) {
   const [ticker, setTicker] = useState('');
   const [allCoinsList, setAllCoinsList] = useState([]);
   const [autoCompleteItems, setAutoCompleteItems] = useState([]);
 
-  const [errorStatus] = useState(false); // for the moment I don't need this
+  const [errorStatus] = useState(false);
 
   useEffect(() => {
     getAllCoinsList().then((coins) => {
@@ -29,8 +29,6 @@ function Ticker({ onAddTicker }) {
     }
   }, [ticker, allCoinsList]);
 
-  const id = useId(); // generate a unique id for the input
-
   const handleTickerChange = (e) => {
     setTicker(e); // set the ticker value
   };
@@ -40,6 +38,10 @@ function Ticker({ onAddTicker }) {
 
     onAddTicker(ticker); // add the ticker to the list
     setTicker(''); // clear the ticker input
+
+    getPrices(url).then((price) => {
+      setPrices(price); // set the prices when the ticker is added
+    });
   };
 
   return (
@@ -47,22 +49,22 @@ function Ticker({ onAddTicker }) {
       <form>
         <div className="flex">
           <div className="max-w-xs">
-            <h2 htmlFor={id} className="block text-sm font-medium text-gray-700">
+            <h2 htmlFor="wallet" className="block text-sm font-medium text-gray-700">
               Ticker
             </h2>
-
             <Input name="ticker" value={ticker} onChange={handleTickerChange} />
-
-            <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
-              {autoCompleteItems.map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+            {!!autoCompleteItems.length && (
+              <div className="flex bg-white shadow-md p-1 rounded-md flex-wrap">
+                {autoCompleteItems.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center px-2 m-1 rounded-md text-xs font-medium bg-gray-300 text-gray-800 cursor-pointer"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="text-sm text-red-600">
               {errorStatus && 'Such a Ticker has already been added'}
             </div>
@@ -92,10 +94,14 @@ function Ticker({ onAddTicker }) {
 
 Ticker.propTypes = {
   onAddTicker: PropTypes.func,
+  setPrices: PropTypes.func,
+  url: PropTypes.string,
 };
 
 Ticker.defaultProps = {
   onAddTicker: () => {},
+  setPrices: () => {},
+  url: '',
 };
 
 export default Ticker;

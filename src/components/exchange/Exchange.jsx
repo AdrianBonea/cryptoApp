@@ -15,30 +15,37 @@ function Exchange({ tickerData, updateTickerData }) {
     updateTickerData(filteredData);
   };
 
+  console.log(tickerData);
   return (
     <section>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        {tickerData.map((item) => (
-          <div
-            role="textbox"
-            tabIndex={0}
-            key={item.name}
-            id={item.id}
-            className={`bg-white overflow-hidden shadow rounded-lg  ${
-              selectedCrypto === item.id ? 'border-4 border-purple-800' : ''
-            } cursor-pointer`}
-            onClick={handleSelect}
-          >
-            <div className="px-4 py-5 sm:p-6 text-center">
-              <dt className="text-sm font-medium text-gray-500 truncate">{`${item.name}-USD`}</dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.price}</dd>
-            </div>
-            <div className="w-full border-t border-gray-200" />
-            <Button type="delete" onClick={handleDelete}>
-              Delete
-            </Button>
+        {tickerData.length === 0 ? (
+          <div className="mt-1 text-3xl font-semibold text-gray-900">
+            No coin inside the wallet.
           </div>
-        ))}
+        ) : (
+          tickerData.map((item) => (
+            <div
+              role="textbox"
+              tabIndex={0}
+              key={item.id}
+              id={item.id}
+              className={`bg-white overflow-hidden shadow rounded-lg  ${
+                selectedCrypto === item.id ? 'border-4 border-purple-800' : ''
+              } cursor-pointer`}
+              onClick={handleSelect}
+            >
+              <div className="px-4 py-5 sm:p-6 text-center">
+                <dt className="text-sm font-medium text-gray-500 truncate">{`${item.name}-USD`}</dt>
+                <dd className="mt-1 text-3xl font-semibold text-gray-900">{item.price}</dd>
+              </div>
+              <div className="w-full border-t border-gray-200" />
+              <Button type="delete" onClick={handleDelete}>
+                Delete
+              </Button>
+            </div>
+          ))
+        )}
       </dl>
     </section>
   );
@@ -49,7 +56,7 @@ Exchange.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
-      change: PropTypes.number,
+      price: PropTypes.number,
     })
   ),
   updateTickerData: PropTypes.func,
@@ -60,7 +67,7 @@ Exchange.defaultProps = {
     {
       id: '1',
       name: 'Bitcoin',
-      change: [0.0],
+      price: 0.0,
     },
   ],
   updateTickerData: () => {},

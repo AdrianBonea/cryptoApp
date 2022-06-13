@@ -1,19 +1,15 @@
 import PropTypes from 'prop-types';
 
-import { useId } from 'react';
-
 function Input({ value, onChange, name, type, placeholder }) {
   const handleChange = (e) => {
     const { value: changedValue } = e.target;
     onChange(changedValue, e);
   };
 
-  const id = useId();
-
   return (
     <div className="mt-1 relative rounded-md shadow-md">
       <input
-        id={id}
+        id="wallet"
         name={name}
         type={type}
         value={value}
